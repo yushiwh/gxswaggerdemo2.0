@@ -28,7 +28,7 @@ public class Swagger2 {
 //	}
 
 	private ApiInfo apiInfo() {
-		return new ApiInfoBuilder().title("Spring Boot中使用Swagger2构建RESTful API 包括一些基本的操作").description("演示的例子")
+		return new ApiInfoBuilder().title("DEMO 2018-04-19").description("升级到Spring Boot2.0中使用Swagger2构建RESTful API 包括一些基本的操作")
 				.termsOfServiceUrl("").contact("喻适").version("1.0").build();
 	}
 }

@@ -10,8 +10,7 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import com.jztey.demo.service.CityService;
-import com.jztey.demo.service.CityServiceImpl;
+
 import com.jztey.framework.boot.ApplicationDruid;
 import com.jztey.framework.boot.ApplicationDubbo;
 
@@ -26,9 +25,9 @@ import com.jztey.framework.boot.ApplicationDubbo;
 })
 
 public class Application {
-	
-	 
-	
+
+
+
 	@Bean
 	public WebMvcConfigurer corsConfigurer() { // 允许跨域
 		return new WebMvcConfigurerAdapter() {
@@ -42,8 +41,8 @@ public class Application {
 
 	public static void main(String[] args) {
 		SpringApplication.run(Application.class, args);
-		 
+
 	}
 
-	 
+
 }

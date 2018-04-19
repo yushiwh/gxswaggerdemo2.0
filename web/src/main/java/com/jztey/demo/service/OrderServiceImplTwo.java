@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.jztey.demo.dao.UserDao;
-import com.jztey.demo.dao.mapper1.UserMapper1;
+
 import com.jztey.demo.domain.MessageVo;
 import com.jztey.demo.domain.User;
 import com.jztey.demo.jms.Producer;
@@ -34,8 +34,7 @@ public class OrderServiceImplTwo extends BaseService<User> implements OrderServi
     @Autowired
     private UserDao       userDao;
 
-    @Autowired
-    private UserMapper1   userMapper1;
+
 
     @Reference
     DubboDemoService      dubboDemoService;
@@ -87,11 +86,7 @@ public class OrderServiceImplTwo extends BaseService<User> implements OrderServi
         return new RestfulResult<>(result);
     }
 
-    @Override
-    public RestfulResult<User> getMybatis(@PathVariable Long id) throws Exception {
-        List<User> result = userMapper1.findUserInfo(id);
-        return new RestfulResult<>(result);
-    }
+
 
     @Override
     @Transactional

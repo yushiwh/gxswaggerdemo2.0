@@ -61,11 +61,11 @@ public interface OrderServiceTwo {
     RestfulResult<User> updateUser(@PathVariable Long id, @RequestBody User user);
 
     ///// mybatis的使用////////
-
-    @ApiOperation(value = "mybatis请求获取用户详细信息", notes = "根据url的id来获取用户详细信息")
-    @ApiImplicitParam(name = "id", value = "编号", paramType = "path", required = true, dataType = "Long")
-    @RequestMapping(value = "/mybatis/{id}", method = RequestMethod.GET)
-    public RestfulResult<User> getMybatis(@PathVariable Long id) throws Exception;
+//
+//    @ApiOperation(value = "mybatis请求获取用户详细信息", notes = "根据url的id来获取用户详细信息")
+//    @ApiImplicitParam(name = "id", value = "编号", paramType = "path", required = true, dataType = "Long")
+//    @RequestMapping(value = "/mybatis/{id}", method = RequestMethod.GET)
+//    public RestfulResult<User> getMybatis(@PathVariable Long id) throws Exception;
 
     ////// dubbo的测试/////
     @ApiOperation(value = "dubbo请求测试", notes = "dubbo请求测试")

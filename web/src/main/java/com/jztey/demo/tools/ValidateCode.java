@@ -12,20 +12,33 @@ import java.util.Random;
  * 验证码，去掉了1和0
  */
 public class ValidateCode {
-    // 图片的宽度。
+    /**
+     * 图片的宽度。
+     */
     private int width = 160;
-    // 图片的高度。
+    /**
+     * 图片的高度。
+     */
     private int height = 40;
-    // 验证码字符个数
+    /**
+     * 验证码字符个数
+     */
     private int codeCount = 4;
-    // 验证码干扰线数
+    /**
+     * 验证码干扰线数
+     */
     private int lineCount = 150;
-    // 验证码
+    /**
+     * 验证码
+     */
     private String code = null;
-    // 验证码图片Buffer
+    /**
+     * 验证码图片Buffer
+     */
     private BufferedImage buffImg = null;
-
-    // 验证码范围,去掉0(数字)和O(拼音)容易混淆的(小写的1和L也可以去掉,大写不用了)
+    /**
+     * 验证码范围,去掉0(数字)和O(拼音)容易混淆的(小写的1和L也可以去掉,大写不用了)
+     */
     private char[] codeSequence = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'J',
             'K', 'L', 'M', 'N', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W',
             'X', 'Y', 'Z', '2', '3', '4', '5', '6', '7', '8', '9'};

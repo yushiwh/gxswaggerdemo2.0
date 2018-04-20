@@ -29,6 +29,25 @@ public class CitySqlProvider {
         }
         return sql.toString();
     }
+
+
+    public String updateCity(City city, Long id) {
+        StringBuffer sql = new StringBuffer();
+        sql.append("UPDATE city SET ");
+        if (null != city.getCityName()) {
+            sql.append(" city_name = '" + city.getCityName() + "', ");
+        }
+        if (null != city.getDescription()) {
+            sql.append(" description ='" + city.getDescription() + "',");
+        }
+        if (null != city.getProvinceId()) {
+            sql.append(" province_id ='" + city.getProvinceId() + "' ");
+        }
+        sql.append("  WHERE  id =" + id);
+        return sql.toString();
+    }
+
+
 }
 
 

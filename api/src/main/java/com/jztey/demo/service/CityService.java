@@ -1,6 +1,7 @@
 package com.jztey.demo.service;
 
 import com.jztey.framework.mvc.RestfulResult;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

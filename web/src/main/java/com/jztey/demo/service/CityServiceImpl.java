@@ -15,9 +15,11 @@ import com.alibaba.dubbo.common.logger.LoggerFactory;
 import com.jztey.demo.domain.City;
 import com.jztey.demo.mapper.CityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
@@ -79,19 +81,54 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public Long updateCity(Long id, City city) {
-        return null;
+    public Long updateCity(@PathVariable Long id, @RequestBody City city) {
+        Long ret = cityMapper.updateCity(city, id);
+
+        // 缓存存在，删除缓存
+        String key = "city_" + id;
+        boolean hasKey = redisTemplate.hasKey(key);
+        if (hasKey) {
+            redisTemplate.delete(key);
+
+            LOGGER.info("CityServiceImpl.updateCity() : 从缓存中删除城市 >> " + city.toString());
+        }
+
+        return ret;
+
+
     }
 
     @Override
-    public Long deleteCity(Long id) {
-        return null;
+    public Long deleteCity(@PathVariable Long id) {
+        Long ret = cityMapper.deleteCity(id);
+
+        // 缓存存在，删除缓存
+        String key = "city_" + id;
+        boolean hasKey = redisTemplate.hasKey(key);
+        if (hasKey) {
+            redisTemplate.delete(key);
+
+            LOGGER.info("CityServiceImpl.deleteCity() : 从缓存中删除城市 ID >> " + id);
+        }
+        return ret;
     }
 
+
+    /**
+     * 注解的方法实现redis的缓存
+     *
+     * @param id
+     * @return
+     */
     @Override
-    public City findCityByIdZj(Long id) {
-        return null;
+    @Cacheable(value = "citys", key = "'user_'+#id")
+    public City findCityByIdZj(@PathVariable Long id) {
+        LOGGER.info("无缓存的时候调用这里");
+        // 从 DB 中获取城市信息
+        City city = cityMapper.findCityById(id);
+        return city;
     }
+
 
     @Override
     public City findCityByIdZjOther(Long id) {

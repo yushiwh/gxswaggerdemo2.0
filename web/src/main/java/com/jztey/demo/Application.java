@@ -20,7 +20,7 @@ import com.jztey.framework.boot.ApplicationDubbo;
 
 @SpringBootApplication
 @EnableScheduling
-@Import({ ApplicationDruid.class, ApplicationCaching.class, ApplicationDubbo.class // 取消本地dubbo服务
+@Import({ ApplicationDruid.class,  ApplicationDubbo.class // 取消本地dubbo服务
 		// , ApplicationMonitoring.class
 })
 

@@ -101,15 +101,12 @@ public interface CityService {
      * @param id
      * @return
      */
-    @ApiOperation(value = "注解方法来查询缓存信息", notes = "根据城市 ID,查询城市信息")
+    @ApiOperation(value = "注解方法来查询缓存信息--没有解决过期时间", notes = "根据城市 ID,查询城市信息")
     @ApiImplicitParam(name = "id", value = "城市ID", paramType = "path", required = true, dataType = "Long")
     @RequestMapping(value = "/zj/{id}", method = RequestMethod.GET)
     City findCityByIdZj(@PathVariable Long id);
 
-    @ApiOperation(value = "另外一种注解方法来查询缓存信息", notes = "根据城市 ID,查询城市信息")
-    @ApiImplicitParam(name = "id", value = "城市ID", paramType = "path", required = true, dataType = "Long")
-    @RequestMapping(value = "/zjother/{id}", method = RequestMethod.GET)
-    City findCityByIdZjOther(@PathVariable Long id);
+
 
     /**
      * 更新城市信息

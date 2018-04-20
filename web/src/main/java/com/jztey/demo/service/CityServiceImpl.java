@@ -10,13 +10,17 @@
  */
 package com.jztey.demo.service;
 
-import com.alibaba.dubbo.common.logger.Logger;
-import com.alibaba.dubbo.common.logger.LoggerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import com.jztey.demo.domain.City;
 import com.jztey.demo.mapper.CityMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -45,6 +49,7 @@ public class CityServiceImpl implements CityService {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
 
     @Autowired
     private CacheTemplate<City> cacheTemplate;
@@ -130,23 +135,59 @@ public class CityServiceImpl implements CityService {
     }
 
 
-    @Override
-    public City findCityByIdZjOther(Long id) {
-        return null;
-    }
-
+    @CachePut(value = "citys", key = "'user_'+#id") // 更新缓存
     @Override
     public Long updateCityZj(Long id, City city) {
-        return null;
+        Long ret = cityMapper.updateCity(city, id);
+        LOGGER.info("更新缓存");
+        return ret;
     }
 
+    @CacheEvict(value = "citys", key = "'user_'+#id") // 清空 缓存
     @Override
     public Long deleteCityZj(Long id) {
-        return null;
+        Long ret = cityMapper.deleteCity(id);
+        LOGGER.info("清除缓存" + id);
+        return ret;
     }
 
     @Override
     public String getcache(Long id) {
-        return null;
+        final String key = "city_" + id;
+        final ValueOperations<String, Long> operations = redisTemplate.opsForValue();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        // 缓存存在
+        boolean hasKey = redisTemplate.hasKey(key);
+        if (hasKey) {
+            LOGGER.info("走缓存 ");
+            Long s = redisTemplate.getExpire(key, TimeUnit.SECONDS);
+            // 当时间超过10秒，异步更新数据到缓存
+            if (s < 30) {
+                new Thread() {
+
+                    @Override
+                    public void run() {
+                        operations.set(key, id, 60, TimeUnit.SECONDS);
+                        LOGGER.info("异步更新数据 ");
+                    }
+                }.start();
+
+            }
+
+        } else {
+            // 插入缓存
+            operations.set(key, id, 60, TimeUnit.SECONDS);
+            LOGGER.info("插入缓存 >> ");
+
+        }
+
+        return "id:" + id;
     }
 }

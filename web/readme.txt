@@ -12,3 +12,8 @@ http://10.3.5.48:8085/governance/services  root root
 
 ----已经升级到了springboot2.0  需要用jdk1.8以上
 
+
+----Druid
+http://127.0.0.1:9090/druid/index.html   druid   123456
+
+

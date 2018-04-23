@@ -24,7 +24,7 @@ import java.util.Map;
 public class GlobalExceptionHandler {
     private org.slf4j.Logger logger = LoggerFactory.getLogger(this.getClass());
 
-    @Value("${output.message}")
+   // @Value("${output.message}")
     private String isoutput;
 
     @ExceptionHandler(value = FileNotFoundException.class)

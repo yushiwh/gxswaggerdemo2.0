@@ -15,6 +15,7 @@ import com.alibaba.fastjson.support.config.FastJsonConfig;
 import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import java.util.List;
@@ -28,7 +29,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @Configuration
-public class FastJsonConfiguration extends WebMvcConfigurerAdapter {
+public class FastJsonConfiguration extends WebMvcConfigurationSupport {
     /**
      * 修改自定义消息转换器
      *

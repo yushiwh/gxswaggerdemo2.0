@@ -10,13 +10,16 @@
  */
 package com.jztey.demo.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jztey.demo.domain.User;
 import com.jztey.demo.jpa.UserJpa;
+import com.jztey.demo.tools.LoggerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -29,7 +32,7 @@ import java.util.List;
  * @since 1.0.0
  */
 @RestController
-@RequestMapping(value = "/user")
+@RequestMapping(value = "/index")
 public class UserController {
 
     @Autowired
@@ -63,6 +66,24 @@ public class UserController {
         user.setId(id);
         userJpa.delete(user);
         return userJpa.findAll();
+    }
+
+
+    /**
+     * 简单测试请求日志的记录
+     *
+     * @param request 请求对象
+     * @param name    用户名
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public JSONObject login(HttpServletRequest request, String name) throws Exception {
+        JSONObject obj = new JSONObject();
+        obj.put("msg", "用户：" + name + "，登录成功。");
+        //将返回值写入到请求对象中
+        request.setAttribute(LoggerUtils.LOGGER_RETURN, obj);
+        return obj;
     }
 
 
